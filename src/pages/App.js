@@ -8,7 +8,9 @@ function App() {
   return(
     <div className='App'>
       <div className='container'>
-        <MusicWrapper title={data.album.name} url={data.album.images[0].url} artists={data.album.artists[0].name}/>
+        {data.map(item => (
+          <MusicWrapper key={item.id} url={item.album.images[0].url} title={item.name} artists={item.artists[0].name}/>
+        ))};
       </div>
     </div>
   );
