@@ -14,6 +14,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+![Screenshot 2022-04-12 at 18-54-30 Musify App](https://user-images.githubusercontent.com/25424598/163077552-256b975c-9638-4290-a3b9-8ac262fdd2cf.png)
+![Screenshot 2022-04-12 at 18-53-57 Musify App](https://user-images.githubusercontent.com/25424598/163077568-e38bbc70-7ce0-4536-adb6-c6cb6954e407.png)
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
