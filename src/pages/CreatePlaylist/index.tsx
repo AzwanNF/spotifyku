@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Track from '../../components/Track';
 import SearchBar from '../../components/SearchBar';
-import FormPlaylist from '../../components/FormPlaylist';
-import NavigationBar from '../../components/NavigationBar';
 import { Track as ITrack } from '../../types/spotify';
+import {
+  Container,
+  Divider,
+  Grid,
+  Image,
+  Stack,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
+import { convertMsToHMS } from '../../utils/convertDuration';
+import FormPlaylist from '../../components/FormPlaylist';
+import image from '../../assets/empty-track.svg';
+
+
 
 const CreatePlaylist: React.FC = () => {
   const [tracks, setTracks] = useState<ITrack[]>([]);
@@ -55,31 +67,64 @@ const CreatePlaylist: React.FC = () => {
     }
   };
 
+  const handleSuccessAdd: () => void = () => {
+    setSelectedTrackURI([]);
+    setSelectedTracks([]);
+  };
+
+
+  
   return (
     <>
-      <NavigationBar />
-      <FormPlaylist uris={selectedTrackURI} />
-
-      <hr />
-      <SearchBar
-        onSuccess={(tracks) => handleSuccessSearch(tracks)}
-        onClearSearch={clearSearch}
-      />
-
-      {tracks.length === 0 && <p>No tracks</p>}
-
-      <div className="track-list">
-        {tracks.map((track) => (
-          <Track
-            key={track.id}
-            url={track.album.images[0].url}
-            title={track.name}
-            artist={track.artists[0].name}
-            select={selectedTrackURI.includes(track.uri)}
-            toggle={() => toggleSelect(track)}
-          />
-        ))}
-      </div>
+      <Container
+        maxW={'100%'}
+        color={'#262626'}
+        h={'100vh'}
+        py={6}
+        px={{ base: 6, lg: 20 }}
+      >
+        <VStack spacing={4} h={'100vh'} align={'stretch'}>
+          <Stack direction={{ base: 'column', md: 'row' }}>
+            <SearchBar
+              onSuccess={(tracks) => handleSuccessSearch(tracks)}
+              onClearSearch={clearSearch}
+            />
+            <FormPlaylist
+              uris={selectedTrackURI}
+              onSuccessAddTrack={handleSuccessAdd}
+            />
+          </Stack>
+          <Divider orientation="horizontal" borderColor={'gray.200'} />
+          {tracks.length === 0 && (
+            <VStack spacing={4} justifyContent="center" flex={'1 1 100%'}>
+              <Image
+                src={image}
+                alt={'Music Home'}
+                boxSize={{ sm: '150px', md: '200px' }}
+                m={0}
+              />
+              <Text fontSize={'lg'}>No tracks selected</Text>
+            </VStack>
+          )}
+          <Grid
+            templateColumns={'repeat(auto-fill, minmax(200px, 1fr))'}
+            gap={7}
+          >
+            {tracks.map((track) => (
+              <Track
+                key={track.id}
+                url={track.album.images[0].url}
+                title={track.name}
+                artist={track.artists[0].name}
+                link_to={track.external_urls.spotify}
+                duration={convertMsToHMS(track.duration_ms)}
+                select={selectedTrackURI.includes(track.uri)}
+                toggle={() => toggleSelect(track)}
+              />
+            ))}
+          </Grid>
+        </VStack>
+      </Container>
     </>
   );
 };

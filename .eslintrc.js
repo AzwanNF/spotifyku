@@ -8,6 +8,7 @@ module.exports = {
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
+      modules: true
     },
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -19,4 +20,6 @@ module.exports = {
     'no-unused-vars': 'off',
     'no-undef': 'off',
   },
+  
+
 };

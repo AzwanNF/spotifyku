@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { RootState, useAppSelector } from '../../redux/store';
+import { RootState, useAppSelector } from '../../store';
 import { searchTrack } from '../../utils/fetchAPI';
 import { Track as ITrack } from '../../types/spotify';
+import { Button, HStack, IconButton, Input } from '@chakra-ui/react';
+import { FaSearch } from 'react-icons/fa';
+import { HiTrash } from 'react-icons/hi';
 
 interface IProps {
   onSuccess: (tracks: ITrack[]) => void;
@@ -22,13 +25,17 @@ const SearchBar: React.FC<IProps> = ({ onSuccess, onClearSearch }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      const responseSearch = await searchTrack(text, accessToken);
-      const tracks = responseSearch.tracks.items;
+    if (text === '') {
+      alert('Please enter a search query');
+    } else {
+      try {
+        const responseSearch = await searchTrack(text, accessToken);
+        const tracks = responseSearch.tracks.items;
 
-      onSuccess(tracks);
-    } catch (e) {
-      alert(e);
+        onSuccess(tracks);
+      } catch (e) {
+        alert(e);
+      }
     }
   };
 
@@ -38,31 +45,30 @@ const SearchBar: React.FC<IProps> = ({ onSuccess, onClearSearch }) => {
   };
 
   return (
-    <div className="search-wrapper">
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <input
-            type="text"
-            name="query"
-            placeholder="Search tracks..."
-            aria-label="search-input"
-            onChange={handleInput}
-            value={text}
-            required
-          />
-          <button aria-label="search-button" className="btn btn-primary">
-            Search
-          </button>
-        </div>
-      </form>
-      <button
-        aria-label="clear-button"
-        className="btn btn-text"
+    <HStack as={'form'} w={'100%'} onSubmit={handleSubmit}>
+      <Input
+        placeholder={'Search tracks...'}
+        type={'text'}
+        name={'query'}
+        aria-label={'search-input'}
+        onChange={handleInput}
+        value={text}
+      />
+      <IconButton
+        icon={<FaSearch />}
+        onClick={handleSubmit}
+        aria-label={'search-button'}
+      />
+      <Button
+        variant={'outline'}
+        colorScheme={'blue'}
+        leftIcon={<HiTrash />}
         onClick={clearSearch}
+        px={{ base: 7, md: 5 }}
       >
-        Clear Search
-      </button>
-    </div>
+        Clear
+      </Button>
+    </HStack>
   );
 };
 

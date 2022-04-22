@@ -1,25 +1,33 @@
+import { Box, Heading, HStack } from '@chakra-ui/react';
 import React from 'react';
-import { logout } from '../../redux/authSlice';
-import { useAppDispatch } from '../../redux/store';
+import { NavLink } from 'react-router-dom';
+import UserDropdown from '../UserDropdown';
 
 const NavigationBar: React.FC = () => {
-  const dispatch = useAppDispatch();
-
-  const handleLogout: () => void = () => {
-    dispatch(logout());
-  };
-
   return (
-    <nav className="navbar">
-      <div className="navbar-brand">
-        <h1>Musify</h1>
-      </div>
-      <div className="navbar-login">
-        <button className="btn btn-primary" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-    </nav>
+    <Box as={'nav'} py={4} px={6} h={'100%'}>
+      <HStack justify={'space-between'}>
+        <Box>
+          <HStack spacing={'24px'}>
+            <Heading as={'h3'} size={'lg'} color={'blue.500'}>
+              SPM
+            </Heading>
+            <Box>
+              <NavLink
+                to="/create-playlist"
+                className={'link'}
+                style={{ fontWeight: 600 }}
+              >
+                Create Playlist
+              </NavLink>
+            </Box>
+          </HStack>
+        </Box>
+        <Box>
+          <UserDropdown />
+        </Box>
+      </HStack>
+    </Box>
   );
 };
 

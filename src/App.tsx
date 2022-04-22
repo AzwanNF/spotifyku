@@ -8,9 +8,10 @@ import {
 } from 'react-router-dom';
 
 import './App.css';
+import NavigationBar from './components/NavigationBar';
 import CreatePlaylist from './pages/CreatePlaylist';
 import Login from './pages/Login';
-import { RootState } from './redux/store';
+import { RootState } from './store';
 
 function App() {
   const isAuthorized: boolean = useSelector(
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <Router>
+      {isAuthorized ? <NavigationBar /> : null}
       <Switch>
         <Route path="/create-playlist" exact>
           {isAuthorized ? <CreatePlaylist /> : <Redirect to="/" />}
