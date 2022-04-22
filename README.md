@@ -15,11 +15,11 @@ Spotify Playlist Maker is spotify clone, that consume Spotify API to search trac
 
 - Clone the project
   ```bash
-     git clone https://github.com/rachmadzii/musify-app.git
+     git clone https://github.com/rachmadzii/spotifyku.git
   ```
 - Go to the project directory
   ```bash
-     cd musify-app
+     cd spotifyku
   ```
 - Install dependencies
   ```bash
